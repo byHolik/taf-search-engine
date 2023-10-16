@@ -15,15 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-
 public class BaseUrlTest {
-
     @DisplayName("Test home page")
     @Test
     public void testBaseUrl() throws IOException {
@@ -49,10 +41,10 @@ public class BaseUrlTest {
         Assertions.assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
         String responseBody = EntityUtils.toString(response.getEntity());
 
-        System.out.println(URI);
-        System.out.println(responseBody);
+/*        System.out.println(URI);
+        System.out.println(responseBody);*/
 
-        Element htmlElement = Jsoup.parse(responseBody).body().selectXpath(xPathLocator).first();
+        Element htmlElement = Util.getHtmlElementByXpath(responseBody, xPathLocator);
 
         Assertions.assertEquals(Resources.EXPECTED_LINK, htmlElement.attr("href"));
         Assertions.assertEquals(Resources.EXPECTED_HEADER, htmlElement.text());
